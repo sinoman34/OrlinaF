@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"  content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="this is an ecommerce project for making Orlina ">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+    <title>Orlina</title>
+    <!--font awesome cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="javascript/firebaseauth.js"></script>
+    <!-- <script type="module" src="javascript/firebaseauth.js"></script> -->
+</head>
+<body>
+
+<!-- Top Navbar -->
+  <header class="navbar">
+    
+    <!-- Logo -->
+    <div class="logo">
+      <a href="index.html"><img src="images/logo.png" alt="Logo"></a>
+    </div>
+    <!-- Middle Links -->
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#">Features</a>
+      <a href="#">Products</a>
+      <a href="#">Categories</a>
+      <a href="#">Review</a>
+      <a href="#">Blogs</a>
+    </nav>
+     <!-- Right Side Icons -->
+      <div class="icons  flex-space-around">
+                <li class="nav_list icon-item">
+                   <a href="index.html"class="nav_icons">
+                      <i class="fa fa-heart" class="heart_icon"></i>
+                   </a>
+                </li>    
+                <li class="nav_list icon-item">
+                    <a href="cart.html" class="nav_icons">
+                      <i class="fa fa-shopping-cart" id="cart_icon"></i>
+                    </a>
+               </li> 
+               <li class="nav_list icon-item">
+                <a href="profile.html" class="nav_icons">
+                    <i class="fa fa-user" id="login_icon"></i>
+                </a>
+                </li> 
+           <div class="register_btn">
+               <a href="login.html"><button id="loginBtn" class="login-btn">Login / Sign Up</button></a>
+                <!-- <button id="loginBtn" class="login-btn">Login / Sign Up</button> -->
+           </div>  
+            
+      </div>
+      <script type="module">
+  import { auth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+  import { auth as mainAuth } from "./javascript/firebaseauth.js";
+
+  const loginBtn = document.getElementById("loginBtn");
+
+  onAuthStateChanged(mainAuth, (user) => {
+    if (user) {
+      // user logged in → hide button
+      if (loginBtn) loginBtn.style.display = "none";
+    } else {
+      // user logged out → show button
+      if (loginBtn) loginBtn.style.display = "inline-block";
+    }
+  });
+</script>
+  </header>
+  <!-- Search Box -->
+ <div class="search-container">
+  <input type="text" placeholder="Search products..." class="search-input" />
+  <button class="search-btn">
+    <i class="fa fa-search"></i>
+  </button>
+</div>
+<!-- Banner Section -->
+<div class="banner-section">
+  <div class="banner-content">
+    <h2>Big Sale is Live!</h2>
+    <p>Up to 50% off on selected products. Shop now!</p>
+    <a href="products.html" class="banner-btn">Explore Deals</a>
+  </div>
+</div>
+
+   <!--footer starts here-->
+   <footer class="main-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <h2>Orlina</h2>
+      <p>Quality products, unbeatable prices.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+    </div>
+    <div class="footer-social">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Orlina. All rights reserved.</p>
+  </div>
+</footer>
+
+    <!--footer ends here-->
+
+  <!-- javascript link-->
+  <script src="./javascript/index.js"></script> 
+  <script type="module">
+  // 🔹 Firebase import
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+  // 🔹 তোমার Firebase config (যেটা firebaseauth.js এ ছিল সেইটিই এখানে দাও)
+  const firebaseConfig = {
+    apiKey: "AIzaSyA4p2HR9A9Ofn4av_WAj8A6FvAbGg5Ppi8",
+    authDomain: "orlina-9eb08.firebaseapp.com",
+    projectId: "orlina-9eb08",
+    storageBucket: "orlina-9eb08.firebasestorage.app",
+    messagingSenderId: "576624295485",
+    appId: "1:576624295485:web:f4784acef7f190100a7454"
+  };
+
+  // 🔹 Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // 🔹 যখন user state change হবে
+  const loginBtn = document.getElementById("loginBtn");
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // ইউজার লগইন করেছে → Login/Sign Up button লুকাও
+      if (loginBtn) loginBtn.style.display = "none";
+    } else {
+      // ইউজার লগআউট বা নেই → button দেখাও
+      if (loginBtn) loginBtn.style.display = "inline-block";
+    }
+  });
+</script>
+</body>
+</html>

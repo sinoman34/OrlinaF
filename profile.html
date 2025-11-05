@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Profile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 🔹 Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <a href="index.html"><img src="images/logo.png" alt="Logo" /></a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#">Features</a>
+      <a href="#">Products</a>
+      <a href="#">Categories</a>
+      <a href="#">Review</a>
+      <a href="#">Blogs</a>
+    </nav>
+  </header>
+
+  <!-- 🔹 Profile Box -->
+  <main class="simple-profile">
+    <div class="profile-card">
+      <h2 id="userName">User Name</h2>
+      <p id="userEmail">user@example.com</p>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
+  </main>
+
+  <!-- 🔹 Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } 
+      from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4p2HR9A9Ofn4av_WAj8A6FvAbGg5Ppi8",
+      authDomain: "orlina-9eb08.firebaseapp.com",
+      projectId: "orlina-9eb08",
+      storageBucket: "orlina-9eb08.firebasestorage.app",
+      messagingSenderId: "576624295485",
+      appId: "1:576624295485:web:f4784acef7f190100a7454"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const userName = document.getElementById("userName");
+    const userEmail = document.getElementById("userEmail");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // 🔹 User Info
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        userEmail.textContent = user.email;
+        userName.textContent = user.displayName || "Orlina User";
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    // 🔹 Logout
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      alert("You have been logged out.");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
